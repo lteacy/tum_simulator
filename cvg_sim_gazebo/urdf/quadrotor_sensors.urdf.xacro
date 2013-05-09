@@ -40,6 +40,22 @@ xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface">
     <xacro:generic_camera name="bottom" sim_name="ardrone" parent="base_link" update_rate="60" res_x="640" res_y="360" image_format="R8G8B8" hfov="81">
       <origin xyz="0.15 0.0 0.0" rpy="0 -${M_PI/2} 0"/>
     </xacro:generic_camera>
+
+    <!-- GPS ADDED BY LUKE TEACY -->
+    <gazebo>      
+        <controller:hector_gazebo_ros_gps name="quadrotor_gps_sim" plugin="libhector_gazebo_ros_gps.so">
+           <alwaysOn>true</alwaysOn>
+           <updateRate>4.0</updateRate>
+           <bodyName>base_link</bodyName>
+           <topicName>gps</topicName>
+           <velocityTopicName>gps_vel</velocityTopicName>
+           <drift>5.0 5.0 5.0</drift>
+           <gaussianNoise>0.1 0.1 0.1</gaussianNoise>
+           <velocityDrift>0 0 0</velocityDrift>
+           <velocityGaussianNoise>0.1 0.1 0.1</velocityGaussianNoise>
+           <!--interface:position name="gps_position"/-->
+       </controller:hector_gazebo_ros_gps>
+   </gazebo>
     
 </robot>
   
