@@ -27,9 +27,9 @@
 //=================================================================================================
 
 #include <hector_gazebo_plugins/gazebo_ros_sonar.h>
-#include "common/Events.hh"
-#include "physics/physics.hh"
-#include "sensors/RaySensor.hh"
+#include "gazebo/common/Events.hh"
+#include "gazebo/physics/physics.hh"
+#include "gazebo/sensors/RaySensor.hh"
 
 #include <limits>
 
@@ -44,7 +44,7 @@ GazeboRosSonar::GazeboRosSonar()
 GazeboRosSonar::~GazeboRosSonar()
 {
   sensor_->SetActive(false);
-  event::Events::DisconnectWorldUpdateStart(updateConnection);
+  event::Events::DisconnectWorldUpdateBegin(updateConnection);
   node_handle_->shutdown();
   delete node_handle_;
 }

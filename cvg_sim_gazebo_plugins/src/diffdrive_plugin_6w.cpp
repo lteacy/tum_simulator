@@ -34,8 +34,8 @@
 #include <assert.h>
 
 #include <hector_gazebo_plugins/diffdrive_plugin_6w.h>
-#include "common/Events.hh"
-#include "physics/physics.hh"
+#include "gazebo/common/Events.hh"
+#include "gazebo/physics/physics.hh"
 
 #include <ros/ros.h>
 #include <tf/transform_broadcaster.h>
@@ -65,7 +65,7 @@ DiffDrivePlugin6W::DiffDrivePlugin6W()
 // Destructor
 DiffDrivePlugin6W::~DiffDrivePlugin6W()
 {
-  event::Events::DisconnectWorldUpdateStart(updateConnection);
+  event::Events::DisconnectWorldUpdateBegin(updateConnection);
   delete transform_broadcaster_;
   rosnode_->shutdown();
   callback_queue_thread_.join();

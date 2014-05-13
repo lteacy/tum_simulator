@@ -13,8 +13,8 @@
 
 
 #include <hector_quadrotor_controller/quadrotor_state_controller.h>
-#include "common/Events.hh"
-#include "physics/physics.hh"
+#include "gazebo/common/Events.hh"
+#include "gazebo/physics/physics.hh"
 
 #include <cmath>
 
@@ -36,7 +36,7 @@ GazeboQuadrotorStateController::GazeboQuadrotorStateController()
 // Destructor
 GazeboQuadrotorStateController::~GazeboQuadrotorStateController()
 {
-  event::Events::DisconnectWorldUpdateStart(updateConnection);
+  event::Events::DisconnectWorldUpdateBegin(updateConnection);
 
   node_handle_->shutdown();
   delete node_handle_;

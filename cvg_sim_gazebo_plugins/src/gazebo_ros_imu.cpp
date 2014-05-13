@@ -55,8 +55,8 @@
 //=================================================================================================
 
 #include <hector_gazebo_plugins/gazebo_ros_imu.h>
-#include "common/Events.hh"
-#include "physics/physics.hh"
+#include "gazebo/common/Events.hh"
+#include "gazebo/physics/physics.hh"
 
 namespace gazebo
 {
@@ -77,7 +77,7 @@ GazeboRosIMU::GazeboRosIMU()
 // Destructor
 GazeboRosIMU::~GazeboRosIMU()
 {
-  event::Events::DisconnectWorldUpdateStart(updateConnection);
+  event::Events::DisconnectWorldUpdateBegin(updateConnection);
 
   node_handle_->shutdown();
 #ifdef USE_CBQ

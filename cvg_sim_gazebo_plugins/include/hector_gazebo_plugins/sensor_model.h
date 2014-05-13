@@ -30,7 +30,7 @@
 #define HECTOR_GAZEBO_PLUGINS_SENSOR_MODEL_H
 
 #include <sdf/sdf.hh>
-#include <math/gzmath.hh>
+#include <gazebo/math/gzmath.hh>
 
 namespace gazebo {
 
