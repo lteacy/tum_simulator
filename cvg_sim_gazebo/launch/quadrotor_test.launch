@@ -1,22 +1,13 @@
 <?xml version="1.0"?>
 <launch>
-	<!--arguments that can be changed for this launch file -->
-	<arg name="aggregator" default="mob" />
-
 	<!-- We resume the logic in empty_world.launch, changing some default arguments -->
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<!-- ensure the model path contains our model database -->
 		<env name="GAZEBO_MODEL_PATH" value="$(optenv GAZEBO_MODEL_PATH):$(find cvg_sim_gazebo)/models/"/>
-		<!--arg name="world_name" value="$(find crowddrone_gazebo)/worlds/ringworld.world"/-->
-		<arg name="gui" value="true"/>
-		<arg name="headless" value="false"/>
 	</include>
 
 
 	<!-- Spawn simulated quadrotor uav -->
 	<include file="$(find cvg_sim_gazebo)/launch/spawn_quadrotor.launch" >
-		<arg name="model" value="$(find cvg_sim_gazebo)/urdf/quadrotor.urdf.xacro"/>
-        <arg name="x" value="-0.495"/>
-        <arg name="y" value="-1.927"/>
-        <arg name="Y" value="-2.07523139"/>
 	</include>
 </launch>
