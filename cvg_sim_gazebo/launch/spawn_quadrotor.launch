@@ -3,6 +3,7 @@
 
  <launch>
    <arg name="model" default="$(find cvg_sim_gazebo)/urdf/quadrotor.urdf.xacro"/>
+   <arg name="robot_namespace" default="/"/>
    <arg name="x" default="0"/>
    <arg name="y" default="0"/>
    <arg name="z" default="0.5"/>
@@ -13,7 +14,7 @@
    <param name="robot_description" command="$(find xacro)/xacro.py '$(arg model)'" />
    
    <!-- push robot_description to factory and spawn robot in gazebo -->
-   <node name="spawn_robot" pkg="gazebo_ros" type="spawn_model"
+   <node name="$(anon spawn_robot)" pkg="gazebo_ros" type="spawn_model"
    args="-param robot_description
    -urdf
    -x '$(arg x)'
@@ -22,7 +23,8 @@
    -R '$(arg R)'
    -P '$(arg P)'
    -Y '$(arg Y)'
-   -model quadrotor"
+   -model $(arg robot_namespace)
+   -robot_namespace $(arg robot_namespace)"
      respawn="false" output="screen"/>
      
    <!-- start robot state publisher -->

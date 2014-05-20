@@ -82,7 +82,7 @@ void GazeboQuadrotorSimpleController::Load(physics::ModelPtr _model, sdf::Elemen
     velocity_topic_ = _sdf->GetElement("topicName")->GetValueString();
 
   if (!_sdf->HasElement("navdataTopic"))
-    navdata_topic_ = "/ardrone/navdata";
+    navdata_topic_ = "navdata";
   else
     navdata_topic_ = _sdf->GetElement("navdataTopic")->GetValueString();
 
@@ -145,6 +145,14 @@ void GazeboQuadrotorSimpleController::Load(physics::ModelPtr _model, sdf::Elemen
   inertia = link->GetInertial()->GetPrincipalMoments();
   mass = link->GetInertial()->GetMass();
 
+  // start ros node
+  if (!ros::isInitialized())
+  {
+    int argc = 0;
+    char** argv = NULL;
+    ros::init(argc,argv,"gazebo",ros::init_options::NoSigintHandler|ros::init_options::AnonymousName);
+  }
+
   node_handle_ = new ros::NodeHandle(namespace_);
 
   // subscribe command: velocity control command
@@ -166,7 +174,7 @@ void GazeboQuadrotorSimpleController::Load(physics::ModelPtr _model, sdf::Elemen
       ros::VoidPtr(), &callback_queue_);
     navdata_subscriber_ = node_handle_->subscribe(ops);
   }
-    //m_navdataPub = node_handle_->advertise< ardrone_autonomy::Navdata >( "/ardrone/navdata", 10 );
+    //m_navdataPub = node_handle_->advertise< ardrone_autonomy::Navdata >( "navdata", 10 );
 
 
   // subscribe imu
