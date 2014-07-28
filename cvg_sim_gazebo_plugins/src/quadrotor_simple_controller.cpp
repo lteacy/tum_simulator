@@ -103,7 +103,7 @@ void GazeboQuadrotorSimpleController::Load(physics::ModelPtr _model, sdf::Elemen
   }
   else {
     link_name_ = _sdf->GetElement("bodyName")->GetValueString();
-    link = boost::shared_dynamic_cast<physics::Link>(world->GetEntity(link_name_));
+    link = boost::dynamic_pointer_cast<physics::Link>(world->GetEntity(link_name_));
   }
 
   if (!link)
