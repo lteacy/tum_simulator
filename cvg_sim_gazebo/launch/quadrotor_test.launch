@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 	<arg name="port" default="11345" />
-	<arg name="robot_namespace" default="/" />
+	<arg name="robot_namespace" default="ardrone" />
 
 	<!-- We resume the logic in empty_world.launch, changing some default arguments -->
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">
