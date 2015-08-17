@@ -44,7 +44,7 @@ GazeboRosSonar::GazeboRosSonar()
 GazeboRosSonar::~GazeboRosSonar()
 {
   sensor_->SetActive(false);
-  event::Events::DisconnectWorldUpdateStart(updateConnection);
+  event::Events::DisconnectWorldUpdateBegin(updateConnection);
   node_handle_->shutdown();
   delete node_handle_;
 }
@@ -54,7 +54,7 @@ GazeboRosSonar::~GazeboRosSonar()
 void GazeboRosSonar::Load(sensors::SensorPtr _sensor, sdf::ElementPtr _sdf)
 {
   // Get then name of the parent sensor
-  sensor_ = boost::shared_dynamic_cast<sensors::RaySensor>(_sensor);
+  sensor_ = boost::dynamic_pointer_cast<sensors::RaySensor>(_sensor);
   if (!sensor_)
   {
     gzthrow("GazeboRosSonar requires a Ray Sensor as its parent");

@@ -65,7 +65,7 @@ DiffDrivePlugin6W::DiffDrivePlugin6W()
 // Destructor
 DiffDrivePlugin6W::~DiffDrivePlugin6W()
 {
-  event::Events::DisconnectWorldUpdateStart(updateConnection);
+  event::Events::DisconnectWorldUpdateBegin(updateConnection);
   delete transform_broadcaster_;
   rosnode_->shutdown();
   callback_queue_thread_.join();
@@ -95,7 +95,7 @@ void DiffDrivePlugin6W::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
   }
   else {
     linkName = _sdf->GetElement("bodyName")->GetValueString();
-    link = boost::shared_dynamic_cast<physics::Link>(world->GetEntity(_sdf->GetElement("bodyName")->GetValueString()));
+    link = boost::dynamic_pointer_cast<physics::Link>(world->GetEntity(_sdf->GetElement("bodyName")->GetValueString()));
   }
 
   // assert that the body by linkName exists

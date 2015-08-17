@@ -13,12 +13,14 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   sensor_msgs
   std_msgs
+  tf
 )
 
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS thread)
 find_package(gazebo REQUIRED)
-
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(SDF sdformat REQUIRED)
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -103,37 +105,51 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
   ${GAZEBO_INCLUDE_DIRS}
+  /usr/local/Cellar/gazebo5/5.1.0/include
+  /usr/local/Cellar/gazebo5/5.1.0/include/gazebo
   ${SDFormat_INCLUDE_DIRS}
+  ${SDF_INCLUDE_DIRS}
 )
+
+get_property(inc_dirs DIRECTORY PROPERTY INCLUDE_DIRECTORIES)
+message("inc_dirs = ${inc_dirs}")
+message("catkin libraries = ${catkin_LIBRARIES}")
+message("sdf libraries = ${SDF_LIBRARIES}")
 
 ## Declare a cpp library
 add_library(diffdrive_plugin_6w src/diffdrive_plugin_6w.cpp)
-target_link_libraries(diffdrive_plugin_6w ${Boost_LIBRARIES})
+target_link_libraries(diffdrive_plugin_6w ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${SDF_LIBRARIES} ${GAZEBO_LIBRARIES})
 
 add_library(reset_plugin src/reset_plugin.cpp)
+target_link_libraries(reset_plugin ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${SDF_LIBRARIES} ${GAZEBO_LIBRARIES})
 
 add_library(hector_gazebo_ros_imu src/gazebo_ros_imu.cpp)
 add_dependencies(hector_gazebo_ros_imu cvg_sim_gazebo_plugins_gencpp)
-target_link_libraries(hector_gazebo_ros_imu ${Boost_LIBRARIES})
+target_link_libraries(hector_gazebo_ros_imu ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${SDF_LIBRARIES} ${GAZEBO_LIBRARIES})
 
 add_library(hector_gazebo_ros_magnetic src/gazebo_ros_magnetic.cpp)
+target_link_libraries(hector_gazebo_ros_magnetic ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${SDF_LIBRARIES} ${GAZEBO_LIBRARIES})
 add_library(hector_gazebo_ros_gps src/gazebo_ros_gps.cpp)
+target_link_libraries(hector_gazebo_ros_gps ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${SDF_LIBRARIES} ${GAZEBO_LIBRARIES})
 add_library(hector_gazebo_ros_sonar src/gazebo_ros_sonar.cpp)
+target_link_libraries(hector_gazebo_ros_sonar ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${SDF_LIBRARIES} ${GAZEBO_LIBRARIES})
 
 add_library(hector_gazebo_ros_baro src/gazebo_ros_baro.cpp)
 add_dependencies(hector_gazebo_ros_baro cvg_sim_msgs_gencpp)
+target_link_libraries(hector_gazebo_ros_baro ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${SDF_LIBRARIES} ${GAZEBO_LIBRARIES})
 
 add_library(hector_gazebo_quadrotor_simple_controller src/quadrotor_simple_controller.cpp)
 add_dependencies(hector_gazebo_quadrotor_simple_controller ardrone_autonomy_gencpp)
+target_link_libraries(hector_gazebo_quadrotor_simple_controller ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${SDF_LIBRARIES} ${GAZEBO_LIBRARIES})
 
 add_library(hector_gazebo_quadrotor_state_controller src/quadrotor_state_controller.cpp)
 add_dependencies(hector_gazebo_quadrotor_state_controller ardrone_autonomy_gencpp)
-target_link_libraries(hector_gazebo_quadrotor_state_controller ${image_transport_LIBRARIES})
+target_link_libraries(hector_gazebo_quadrotor_state_controller ${image_transport_LIBRARIES} ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${SDF_LIBRARIES} ${GAZEBO_LIBRARIES})
 
 
 ## Declare a cpp executable
 add_executable(test_trajectory src/test_trajectory.cpp)
-target_link_libraries(test_trajectory ${catkin_LIBRARIES})
+target_link_libraries(test_trajectory ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${SDF_LIBRARIES} ${GAZEBO_LIBRARIES})
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes

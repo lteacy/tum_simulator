@@ -45,7 +45,7 @@ GazeboRosMagnetic::GazeboRosMagnetic()
 // Destructor
 GazeboRosMagnetic::~GazeboRosMagnetic()
 {
-  event::Events::DisconnectWorldUpdateStart(updateConnection);
+  event::Events::DisconnectWorldUpdateBegin(updateConnection);
 
   node_handle_->shutdown();
   delete node_handle_;
@@ -75,7 +75,7 @@ void GazeboRosMagnetic::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
   }
   else {
     link_name_ = _sdf->GetElement("bodyName")->GetValueString();
-    link = boost::shared_dynamic_cast<physics::Link>(world->GetEntity(link_name_));
+    link = boost::dynamic_pointer_cast<physics::Link>(world->GetEntity(link_name_));
   }
 
   if (!link)
